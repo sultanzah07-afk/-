@@ -1,283 +1,1013 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UNKNOWN ACCESS</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;900&family=Share+Tech+Mono&display=swap');
-* { box-sizing: border-box; }
-body {
-    margin: 0;
-    background: #020202;
-    color: #ff1616;
-    font-family: 'Cairo', monospace;
-    overflow-x: hidden;
-    min-height: 100vh;
-}
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(255,0,0,0.06) 3px
-    );
-    pointer-events: none;
-    z-index: 10;
-}
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(
-        circle,
-        transparent 30%,
-        rgba(100,0,0,0.3) 100%
-    );
-    pointer-events: none;
-    z-index: 9;
-}
-.container {
-    width: 100%;
-    max-width: 520px;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
-}
-.logo {
-    font-family: 'Share Tech Mono', monospace;
-    color: #ff0000;
-    font-size: 15px;
-    letter-spacing: 4px;
-    margin-top: 20px;
-    text-shadow: 0 0 15px red;
-}
-.warning {
-    font-size: 30px;
-    font-weight: 900;
-    margin-top: 35px;
-    animation: flicker 0.12s infinite alternate;
-    text-shadow: 0 0 20px red;
-}
-@keyframes flicker {
-    from { opacity: 1; }
-    to { opacity: 0.5; }
-}
-.glitch {
-    position: relative;
-    animation: glitch 0.5s infinite;
-}
-@keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(2px, -2px); }
-    60% { transform: translate(-2px, 0); }
-    80% { transform: translate(2px, 2px); }
-    100% { transform: translate(0); }
-}
-.panel {
-    border: 1px solid #ff0000;
-    background: rgba(20,0,0,0.9);
-    padding: 20px;
-    margin-top: 25px;
-    box-shadow: 0 0 25px rgba(255,0,0,0.15);
-}
-.status {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 13px;
-    color: #ff4444;
-    text-align: right;
-    line-height: 2.2;
-    min-height: 100px;
-}
-.progress {
-    height: 8px;
-    background: #250000;
-    margin-top: 20px;
-    border: 1px solid #600000;
-}
-.bar {
-    width: 0%;
-    height: 100%;
-    background: red;
-    box-shadow: 0 0 15px red;
-    transition: width 0.1s;
-}
-button {
-    width: 100%;
-    margin-top: 25px;
-    padding: 17px;
-    background: #8b0000;
-    color: white;
-    border: 1px solid red;
-    font-family: 'Cairo';
-    font-size: 18px;
-    font-weight: 900;
-    cursor: pointer;
-    box-shadow: 0 0 20px #400000;
-}
-button:active {
-    background: red;
-}
-.data {
-    display: none;
-    text-align: right;
-    margin-top: 25px;
-    border-top: 1px solid red;
-    padding-top: 20px;
-}
-.data p {
-    background: #100000;
-    padding: 12px;
-    border-right: 3px solid red;
-    color: #ff5555;
-    animation: appear 1s;
-}
-@keyframes appear {
-    from { opacity: 0; transform: translateX(20px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-.countdown {
-    display: none;
-    font-size: 70px;
-    font-family: 'Share Tech Mono';
-    color: red;
-    text-shadow: 0 0 30px red;
-}
-.final {
-    display: none;
-    padding: 30px 10px;
-    color: white;
-    font-size: 28px;
-    font-weight: 900;
-    text-shadow: 0 0 20px red;
-    animation: glitch 0.2s infinite;
-}
-.final small {
-    color: #ff3333;
-    font-size: 18px;
-}
-#reveal {
-    display: none;
-}
-.matrix {
-    color: #600000;
-    font-size: 11px;
-    margin-top: 30px;
-    word-break: break-all;
-    opacity: 0.6;
-}
-</style>
-</head>
-<body>
-<div class="container">
-<div class="logo">UNKNOWN ENTITY // 666</div>
-<div class="warning glitch">
-⚠ تم اختراق الهاتف ⚠
-</div>
-<div class="panel">
-<h2 style="color:white; font-size:20px;">
-SYSTEM COMPROMISED
-</h2>
-<div class="status" id="status">
-> جاري الاتصال بالنظام...<br>
-> اكتشاف جهاز مستهدف...<br>
-> بانتظار بدء العملية...
-</div>
-<div class="progress">
-<div class="bar" id="bar"></div>
-</div>
-<button id="start" onclick="startProcess()">
-بدء فحص الجهاز
-</button>
-<div class="countdown" id="countdown"></div>
-<div class="data" id="data">
-<h3 style="color:white;">IDENTITY DETECTED</h3>
-<p>👤 اسم المستهدفة: <b>وفاء</b></p>
-<p>🎂 سنة الميلاد: <b>1998</b></p>
-<p>👨 اسم الأب: <b>محمد عاشور</b></p>
-<p style="color:red;">
-⚠ تم التعرف على المعلومات المدخلة في المقلب
-</p>
-<button onclick="revealPrank()">
-متابعة...
-</button>
-</div>
-<div class="final" id="final">
-😂😂😂<br>
-يا وفاء انتي ضحية مقلب!<br>
-<small>
-هههههههههههههههه<br>
-لا يوجد اختراق حقيقي ❤️
-</small>
-</div>
-</div>
-<div class="matrix">
-010101 ACCESS DENIED 010101<br>
-UNKNOWN SYSTEM 666<br>
-0101010101010101010101010101
-</div>
-</div>
-<script>
-let started = false;
-function startProcess() {
-if (started) return;
-started = true;
-document.getElementById("start").style.display = "none";
-let status = document.getElementById("status");
-let bar = document.getElementById("bar");
-let messages = [
-"> جاري فحص النظام...",
-"> تجاوز جدار الحماية الوهمي...",
-"> تحليل بيانات المقلب...",
-"> اكتشاف هوية المستهدفة...",
-"> تحميل المعلومات...",
-"> اكتملت العملية."
-];
-let progress = 0;
-let interval = setInterval(() => {
-progress += 2;
-bar.style.width = progress + "%";
-let index = Math.min(
-Math.floor(progress / 18),
-messages.length - 1
-);
-status.innerHTML = messages[index];
-if (progress >= 100) {
-clearInterval(interval);
-status.innerHTML =
-"> تم الانتهاء من الفحص الوهمي.<br>" +
-"> جاري عرض المعلومات...";
-setTimeout(() => {
-document.getElementById("data").style.display = "block";
-}, 2000);
-}
-}, 100);
-}
-function revealPrank() {
-document.getElementById("data").style.display = "none";
-let countdown = document.getElementById("countdown");
-countdown.style.display = "block";
-let number = 3;
-countdown.innerText = number;
-let timer = setInterval(() => {
-number--;
-if (number > 0) {
-countdown.innerText = number;
-} else {
-clearInterval(timer);
-countdown.style.display = "none";
-document.getElementById("final").style.display = "block";
-document.querySelector(".warning").innerText =
-"😂 تم اكتشاف الضحية 😂";
-document.querySelector(".warning").style.color = "white";
-document.body.style.background = "#120000";
-}
-}, 1000);
-}
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0D0D0E">
+    <title>منصة ضرب وناتج | الاستجابة الفورية لجدول الضرب</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#0D0D0E',
+                            dark: '#161619',
+                            card: '#1E1E24',
+                            border: '#2A2A35',
+                            orange: '#FF6B00',
+                            orangeHover: '#E05E00',
+                            orangeGlow: 'rgba(255, 107, 0, 0.3)',
+                            text: '#F3F4F6',
+                            muted: '#9CA3AF'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        * { -webkit-tap-highlight-color: transparent; }
+        html { width: 100%; overflow-x: hidden; touch-action: manipulation; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0D0D0E;
+            color: #F3F4F6;
+            overflow-x: hidden;
+            width: 100%;
+            min-width: 320px;
+            -webkit-text-size-adjust: 100%;
+        }
+        button, select, input { touch-action: manipulation; }
+        button { cursor: pointer; user-select: none; -webkit-user-select: none; }
+        input, select { font-size: 16px; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #161619; }
+        ::-webkit-scrollbar-thumb { background: #FF6B00; border-radius: 4px; }
+
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255,107,0,.4); }
+            50% { box-shadow: 0 0 30px rgba(255,107,0,.8); }
+        }
+        .glow-pulse { animation: pulseGlow 2s infinite; }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px,0,0); }
+            20%, 80% { transform: translate3d(2px,0,0); }
+            30%, 50%, 70% { transform: translate3d(-4px,0,0); }
+            40%, 60% { transform: translate3d(4px,0,0); }
+        }
+        .shake { animation: shake .4s cubic-bezier(.36,.07,.19,.97) both; }
+
+        .hint-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 46px;
+            padding: 10px 22px;
+            color: #FF8A35;
+            background: rgba(255,107,0,.12);
+            border: 1px solid rgba(255,107,0,.65);
+            border-radius: 14px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 800;
+            transition: background .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease;
+        }
+        .hint-btn:hover {
+            color: #fff;
+            background: #FF6B00;
+            box-shadow: 0 0 18px rgba(255,107,0,.3);
+            transform: translateY(-2px);
+        }
+        .hint-btn:active { transform: scale(.96); }
+
+        .quiz-option-correct {
+            background: #15803d !important;
+            border-color: #22c55e !important;
+            color: #fff !important;
+            box-shadow: 0 0 18px rgba(34,197,94,.3);
+        }
+        .quiz-option-wrong {
+            background: #b91c1c !important;
+            border-color: #ef4444 !important;
+            color: #fff !important;
+            box-shadow: 0 0 18px rgba(239,68,68,.3);
+        }
+        .quiz-option-disabled { pointer-events: none; opacity: .9; }
+
+        @media (max-width: 768px) {
+            header > div {
+                height: auto !important;
+                min-height: 76px;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+            header h1 { font-size: 18px !important; }
+            header .w-12 { width: 42px !important; height: 42px !important; }
+            header .rounded-2xl { gap: 12px; padding: 9px 12px; }
+            nav {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0,1fr));
+                gap: 8px !important;
+            }
+            nav .tab-btn {
+                min-width: 0 !important;
+                width: 100%;
+                padding: 12px 7px !important;
+                font-size: 12px !important;
+            }
+            main { padding-top: 18px !important; padding-bottom: 24px !important; }
+            .tab-content { width: 100%; }
+            #flashcard { height: 230px !important; }
+            #fc-question { font-size: 42px !important; }
+            #fc-answer { font-size: 52px !important; }
+            #quiz-options-container { gap: 10px !important; }
+            #quiz-options-container button {
+                min-height: 65px;
+                padding: 14px 8px !important;
+                font-size: 21px !important;
+            }
+            #speed-game-card, #speed-result-card, #custom-active-card { padding: 18px !important; }
+            #custom-active-card .flex.justify-between { flex-wrap: wrap; gap: 12px; }
+            #custom-active-card .flex.justify-between button { width: 100%; }
+            #speed-question, #custom-question { font-size: 38px !important; }
+            #speed-input, #custom-input { min-width: 0; font-size: 20px !important; }
+            #toast-container { top: 10px !important; left: 10px !important; right: 10px !important; }
+            #toast-container > div { max-width: 100%; font-size: 12px; }
+        }
+        @media (max-width: 380px) {
+            nav .tab-btn { font-size: 11px !important; gap: 5px !important; }
+            #quiz-options-container button { font-size: 18px !important; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+<head>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="منصة الضرب">
+  <link rel="apple-touch-icon" href="logo.png">
+
+  <meta charset="UTF-8">
+  ...
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-orange selection:text-white">
+    <div id="toast-container" class="fixed top-5 left-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <header class="bg-brand-dark border-b border-brand-border sticky top-0 z-40 backdrop-blur-md bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-brand-orange flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-brand-orange/30">×</div>
+                <div>
+                    <h1 class="text-2xl font-extrabold tracking-wider text-white flex items-center gap-2">منصة <span class="text-brand-orange">ضرب وناتج</span></h1>
+                    <p class="text-xs text-brand-muted font-medium">ابتكار: <span class="text-gray-300 font-bold">سلطان الزهراني</span></p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4 sm:gap-6 bg-brand-card px-4 py-2 rounded-2xl border border-brand-border">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid font-bold fa-trophy text-brand-orange text-lg"></i>
+                    <div>
+                        <div class="text-[10px] text-brand-muted font-bold leading-none">المستوى الحالي</div>
+                        <div id="user-rank" class="text-sm font-extrabold text-white">مبتدئ</div>
+                    </div>
+                </div>
+                <div class="h-8 w-px bg-brand-border"></div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-yellow-500 text-lg"></i>
+                    <div>
+                        <div class="text-[10px] text-brand-muted font-bold leading-none">إجمالي النقاط</div>
+                        <div id="user-points" class="text-sm font-black text-brand-orange">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <nav class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 bg-brand-dark p-2 rounded-2xl border border-brand-border max-w-4xl mx-auto">
+            <button onclick="switchTab('flashcards')" id="tab-flashcards" class="tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 bg-brand-orange text-white shadow-lg shadow-brand-orange/20"><i class="fa-solid fa-bolt"></i> الاستجابة الفورية</button>
+            <button onclick="switchTab('custom')" id="tab-custom" class="tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-bold text-brand-muted hover:text-white transition-all duration-300 flex items-center justify-center gap-2"><i class="fa-solid fa-sliders"></i> تدريب مخصص</button>
+            <button onclick="switchTab('speed')" id="tab-speed" class="tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-bold text-brand-muted hover:text-white transition-all duration-300 flex items-center justify-center gap-2"><i class="fa-solid fa-stopwatch"></i> تحدي 60 ثانية</button>
+            <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-bold text-brand-muted hover:text-white transition-all duration-300 flex items-center justify-center gap-2"><i class="fa-solid fa-gamepad"></i> معركة الاختيارات</button>
+            <button onclick="switchTab('tricks')" id="tab-tricks" class="tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-bold text-brand-muted hover:text-white transition-all duration-300 flex items-center justify-center gap-2"><i class="fa-solid fa-lightbulb"></i> خريطة الحيل</button>
+            <button onclick="switchTab('badges')" id="tab-badges" class="tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-bold text-brand-muted hover:text-white transition-all duration-300 flex items-center justify-center gap-2"><i class="fa-solid fa-medal"></i> الأوسمة والمستوى</button>
+        </nav>
+
+        <!-- الاستجابة الفورية -->
+        <section id="section-flashcards" class="tab-content block max-w-xl mx-auto">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-black text-white">بطاقات الاستجابة الفورية</h2>
+                <p class="text-sm text-brand-muted mt-1">تدرّب على جميع المسائل من 1×1 إلى 10×10 ضمن الجداول التي تختارها.</p>
+            </div>
+            <div id="flashcards-setup-card" class="bg-brand-card p-6 sm:p-8 rounded-3xl border border-brand-border shadow-2xl mb-5">
+                <label class="block text-sm font-bold text-brand-muted mb-4 text-center">حدد الجداول للتدريب:</label>
+                <div id="flashcards-tables-selector" class="grid grid-cols-5 sm:grid-cols-10 gap-2 mb-6"></div>
+                <button type="button" onclick="startFlashcards()" class="w-full py-4 bg-brand-orange hover:bg-brand-orangeHover text-white font-extrabold text-lg rounded-2xl transition-all shadow-lg shadow-brand-orange/30">ابدأ التدريب الفوري</button>
+            </div>
+            <div id="flashcards-active-card" class="hidden">
+                <div class="flex justify-start mb-4"><button type="button" onclick="resetFlashcards()" class="w-full py-3 px-4 bg-brand-orange/15 hover:bg-brand-orange text-brand-orange hover:text-white border-2 border-brand-orange rounded-2xl font-extrabold text-base transition-all">↩ تغيير الجدول / رجوع</button></div>
+                <div class="text-center mb-4"><span id="flashcard-progress" class="text-sm font-bold text-brand-muted">التقدم: 0 / 5 مسائل سهلة جداً</span></div>
+                <div class="perspective-1000 mb-6">
+                    <div id="flashcard" onclick="flipCard()" class="transform-style-3d cursor-pointer relative w-full h-72 bg-brand-card rounded-3xl border-2 border-brand-border flex items-center justify-center shadow-2xl transition-transform duration-500 hover:border-brand-orange">
+                        <div class="backface-hidden absolute inset-0 flex flex-col items-center justify-center p-6">
+                            <span class="text-xs font-bold text-brand-orange bg-brand-orange/10 px-3 py-1 rounded-full mb-4">انقر لكشف الإجابة</span>
+                            <div id="fc-question" class="text-6xl font-black tracking-wider text-white">7 × 8</div>
+                        </div>
+                        <div class="backface-hidden rotate-y-180 absolute inset-0 flex flex-col items-center justify-center p-6 bg-brand-dark rounded-3xl">
+                            <span class="text-xs font-bold text-green-400 bg-green-500/10 px-3 py-1 rounded-full mb-4">الإجابة الصحيحة</span>
+                            <div id="fc-answer" class="text-7xl font-black text-brand-orange">56</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button onclick="rateCard(false)" class="flex-1 py-4 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 rounded-2xl font-bold transition-all flex items-center justify-center gap-2"><i class="fa-solid fa-rotate-right"></i> يحتاج تكرار</button>
+                    <button onclick="rateCard(true)" class="flex-1 py-4 bg-green-600/20 hover:bg-green-600 text-green-400 hover:text-white border border-green-500/30 rounded-2xl font-bold transition-all flex items-center justify-center gap-2"><i class="fa-solid fa-check"></i> سهل جداً (15 نقطة بعد 5 مسائل)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- تحدي السرعة -->
+        <section id="section-speed" class="tab-content hidden max-w-2xl mx-auto">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-black text-white">تحدي السرعة (60 ثانية)</h2>
+                <p class="text-sm text-brand-muted mt-1">اختبر قدرتك على الاستجابة الفورية تحت ضغط الوقت!</p>
+            </div>
+            <div id="speed-start-card" class="bg-brand-card p-8 rounded-3xl border border-brand-border text-center shadow-2xl">
+                <div class="w-20 h-20 bg-brand-orange/10 text-brand-orange rounded-full flex items-center justify-center mx-auto text-3xl mb-4"><i class="fa-solid fa-stopwatch"></i></div>
+                <h3 class="text-xl font-bold mb-2">مستعد للسباق؟</h3>
+                <p class="text-brand-muted text-sm mb-6">أجب على أكبر عدد ممكن من الأسئلة قبل انتهاء الـ 60 ثانية.</p>
+                <label class="block text-sm font-bold text-brand-muted mb-3">اختر الجداول للتحدي:</label>
+                <div id="speed-tables-selector" class="grid grid-cols-5 sm:grid-cols-10 gap-2 mb-6"></div>
+                <button onclick="startSpeedChallenge()" class="w-full py-4 bg-brand-orange hover:bg-brand-orangeHover text-white font-extrabold text-lg rounded-2xl transition-all shadow-lg shadow-brand-orange/30">ابدأ التحدي الآن</button>
+            </div>
+
+            <div id="speed-game-card" class="hidden bg-brand-card p-8 rounded-3xl border border-brand-border shadow-2xl">
+                <div class="flex items-center justify-between mb-8 pb-4 border-b border-brand-border">
+                    <div><span class="text-xs text-brand-muted font-bold block">الوقت المتبقي</span><span id="speed-timer" class="text-3xl font-black text-brand-orange">60s</span></div>
+                    <div><span class="text-xs text-brand-muted font-bold block">الإجابات الصحيحة</span><span id="speed-score" class="text-3xl font-black text-green-400">0</span></div>
+                </div>
+                <div class="flex justify-start mb-4"><button type="button" onclick="exitSpeedChallenge()" class="w-full py-3 px-4 bg-brand-orange/15 hover:bg-brand-orange text-brand-orange hover:text-white border-2 border-brand-orange rounded-2xl font-extrabold text-base transition-all">↩ تغيير الجدول / رجوع</button></div>
+                <div class="text-center mb-8">
+                    <div id="speed-question" class="text-5xl font-black text-white mb-3">-- × --</div>
+                    <div class="mb-5 flex flex-col items-center gap-2">
+                        <button type="button" onclick="revealSpeedAnswer()" class="hint-btn"><i class="fa-solid fa-lightbulb"></i> غششني</button>
+                        <div id="speed-hint-answer" class="hidden text-xl font-black text-brand-orange"></div>
+                    </div>
+                    <form onsubmit="checkSpeedAnswer(event)" class="flex gap-3 max-w-sm mx-auto">
+                        <input type="number" id="speed-input" autocomplete="off" inputmode="numeric" placeholder="الناتج..." class="w-full bg-brand-dark border-2 border-brand-border focus:border-brand-orange text-center text-3xl font-bold rounded-2xl py-3 px-4 text-white outline-none transition-all">
+                        <button type="submit" class="bg-brand-orange hover:bg-brand-orangeHover text-white font-bold px-6 rounded-2xl transition-all text-xl"><i class="fa-solid fa-arrow-left"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="speed-result-card" class="hidden bg-brand-card p-8 rounded-3xl border border-brand-border text-center shadow-2xl">
+                <div class="w-20 h-20 bg-yellow-500/10 text-yellow-500 rounded-full flex items-center justify-center mx-auto text-3xl mb-4"><i class="fa-solid fa-flag-checkered"></i></div>
+                <h3 class="text-2xl font-black mb-2">انتهى الوقت!</h3>
+                <p class="text-brand-muted text-sm mb-4">نتيجتك النهائية في تحدي السرعة:</p>
+                <div class="text-5xl font-black text-brand-orange mb-4" id="speed-final-score">0</div>
+                <p id="speed-feedback" class="text-base font-bold text-gray-300 mb-6">استجابة سريعة جداً!</p>
+                <button onclick="startSpeedChallenge()" class="w-full mb-3 py-4 bg-brand-orange hover:bg-brand-orangeHover text-white font-extrabold text-lg rounded-2xl transition-all shadow-lg shadow-brand-orange/30">إعادة التحدي</button>
+                <button type="button" onclick="exitSpeedChallenge()" class="w-full py-3 px-4 bg-brand-orange/15 hover:bg-brand-orange text-brand-orange hover:text-white border-2 border-brand-orange rounded-2xl font-extrabold text-base transition-all">↩ تغيير الجدول / رجوع</button>
+            </div>
+        </section>
+
+        <!-- التدريب المخصص -->
+        <section id="section-custom" class="tab-content hidden max-w-2xl mx-auto">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-black text-white">التدريب المخصص</h2>
+                <p class="text-sm text-brand-muted mt-1">اختر الجداول التي تود تركيز تمرينك عليها اليوم.</p>
+            </div>
+            <div id="custom-setup-card" class="bg-brand-card p-6 sm:p-8 rounded-3xl border border-brand-border shadow-2xl">
+                <label class="block text-sm font-bold text-brand-muted mb-4 text-center">حدد الجداول للتدريب:</label>
+                <div class="grid grid-cols-3 sm:grid-cols-4 gap-3 mb-6" id="tables-selector"></div>
+                <button onclick="startCustomPractice()" class="w-full py-4 bg-brand-orange hover:bg-brand-orangeHover text-white font-extrabold text-lg rounded-2xl transition-all shadow-lg shadow-brand-orange/30">ابدأ التدريب المخصص</button>
+            </div>
+
+            <div id="custom-active-card" class="hidden bg-brand-card p-8 rounded-3xl border border-brand-border text-center shadow-2xl">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-xs text-brand-muted font-bold" id="custom-progress-text">السؤال 1 من 10</span>
+                    <button onclick="exitCustomPractice()" class="w-full py-3 px-4 bg-brand-orange/15 hover:bg-brand-orange text-brand-orange hover:text-white border-2 border-brand-orange rounded-2xl font-extrabold text-base transition-all">↩ تغيير الجدول / رجوع</button>
+                </div>
+                <div id="custom-question" class="text-5xl font-black text-white mb-4">-- × --</div>
+                <div class="flex flex-col items-center gap-3 mb-5">
+                    <button type="button" onclick="revealCustomAnswer()" class="hint-btn"><i class="fa-solid fa-lightbulb"></i> غششني</button>
+                    <div id="custom-hint-answer" class="hidden text-xl font-black text-brand-orange bg-brand-orange/10 border border-brand-orange/30 rounded-xl px-5 py-3"></div>
+                </div>
+                <form onsubmit="checkCustomAnswer(event)" class="flex gap-3 max-w-sm mx-auto mb-4">
+                    <input type="number" id="custom-input" autocomplete="off" inputmode="numeric" placeholder="الجواب" class="w-full bg-brand-dark border-2 border-brand-border focus:border-brand-orange text-center text-3xl font-bold rounded-2xl py-3 px-4 text-white outline-none transition-all">
+                    <button type="submit" class="bg-brand-orange hover:bg-brand-orangeHover text-white font-bold px-6 rounded-2xl transition-all text-xl">تأكيد</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- معركة الاختيارات -->
+        <section id="section-quiz" class="tab-content hidden max-w-xl mx-auto">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-black text-white">معركة الاختيارات السريعة</h2>
+                <p class="text-sm text-brand-muted mt-1">اختر الإجابة الصحيحة بسرعة فلقة العين لتنمية البديهة.</p>
+            </div>
+            <div id="quiz-setup-card" class="bg-brand-card p-6 sm:p-8 rounded-3xl border border-brand-border shadow-2xl">
+                <label class="block text-sm font-bold text-brand-muted mb-4 text-center">حدد الجداول للتدريب:</label>
+                <div id="quiz-tables-selector" class="grid grid-cols-5 sm:grid-cols-10 gap-2 mb-6"></div>
+                <div class="mb-6 rounded-2xl border border-brand-border bg-brand-dark/70 p-4 text-right">
+                    <label for="quiz-question-time" class="flex items-center gap-2 text-sm font-extrabold text-white mb-3"><i class="fa-solid fa-stopwatch text-brand-orange"></i> الوقت لكل سؤال <span class="text-brand-muted font-semibold">(اختياري)</span></label>
+                    <div class="flex items-center gap-3">
+                        <select id="quiz-question-time" class="flex-1 bg-brand-card border-2 border-brand-border focus:border-brand-orange text-white rounded-xl py-3 px-4 font-bold outline-none">
+                            <option value="15">15 ثانية</option><option value="20">20 ثانية</option><option value="30" selected>30 ثانية</option><option value="45">45 ثانية</option><option value="60">60 ثانية</option>
+                        </select>
+                        <span class="text-xs text-brand-muted">من 15 إلى 60 ثانية</span>
+                    </div>
+                    <p class="text-xs text-brand-muted mt-2">سيُطبّق الوقت الذي تختاره على كل سؤال في المعركة.</p>
+                </div>
+                <button type="button" onclick="startQuizBattle()" class="w-full py-4 bg-brand-orange hover:bg-brand-orangeHover text-white font-extrabold text-lg rounded-2xl transition-all shadow-lg shadow-brand-orange/30">ابدأ معركة الاختيارات</button>
+            </div>
+
+            <div id="quiz-active-card" class="hidden bg-brand-card p-6 sm:p-8 rounded-3xl border border-brand-border shadow-2xl relative overflow-hidden">
+                <button type="button" onclick="resetQuizToSetup()" class="w-full mb-5 py-3 px-4 bg-brand-orange/15 hover:bg-brand-orange text-brand-orange hover:text-white border-2 border-brand-orange rounded-2xl font-extrabold text-base transition-all">↩ تغيير الجدول / رجوع</button>
+                <div class="w-full bg-brand-dark h-2 rounded-full mb-6 overflow-hidden"><div id="quiz-timer-bar" class="bg-brand-orange h-full w-full transition-all duration-100 ease-linear"></div></div>
+                <div class="text-center mb-8"><span class="text-xs font-bold text-brand-muted mb-2 block">ما هو ناتج:</span><div id="quiz-question" class="text-5xl font-black text-white tracking-wider">8 × 9</div></div>
+                <div class="grid grid-cols-2 gap-4" id="quiz-options-container"></div>
+            </div>
+        </section>
+
+        <!-- خريطة الحيل -->
+        <section id="section-tricks" class="tab-content hidden max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-black text-white">خريطة الحيل وأنماط العقل</h2>
+                <p class="text-sm text-brand-muted mt-1">اختصارات ذكية ومفاهيم بصرية تضمن لك فهم الجدول وعدم نسيانه نهائياً.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-brand-card p-6 rounded-3xl border border-brand-border hover:border-brand-orange/50 transition-all">
+                    <div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center font-bold text-lg">🖐️</div><h3 class="font-extrabold text-lg text-white">حيلة الأصابع السحرية (جدول 9)</h3></div>
+                    <p class="text-sm text-brand-muted leading-relaxed">افرد يديك الـ 10 أمامك. لضرب <span class="text-brand-orange font-bold">9 × 4</span>، اثنِ الأصبع الرابع من اليسار. الأرقام على يسار الأصبع هي العشرات (3) وعلى يمينه هي الآحاد (6) ← الإجابة <span class="text-white font-bold">36</span>!</p>
+                </div>
+                <div class="bg-brand-card p-6 rounded-3xl border border-brand-border hover:border-brand-orange/50 transition-all">
+                    <div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center font-bold text-lg">⚡</div><h3 class="font-extrabold text-lg text-white">النمط الزوجي (جدول 6)</h3></div>
+                    <p class="text-sm text-brand-muted leading-relaxed">عند ضرب 6 في أي رقم زوجي، الإجابة دائماً تنتهي بنفس الرقم!<br><span class="text-brand-orange font-bold">6 × 4 = 24</span> (تنتهي بـ 4 وتسبقها نصف 4 وهو 2)، <span class="text-brand-orange font-bold">6 × 8 = 48</span>.</p>
+                </div>
+                <div class="bg-brand-card p-6 rounded-3xl border border-brand-border hover:border-brand-orange/50 transition-all">
+                    <div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center font-bold text-lg">⏹️</div><h3 class="font-extrabold text-lg text-white">مربعات الأعداد (الأرقام المتشابهة)</h3></div>
+                    <p class="text-sm text-brand-muted leading-relaxed">حفظ مربعات الأعداد يسهّل باقي الجدول:<br><span class="text-brand-orange font-bold">6×6=36</span> | <span class="text-brand-orange font-bold">7×7=49</span> | <span class="text-brand-orange font-bold">8×8=64</span> | <span class="text-brand-orange font-bold">9×9=81</span></p>
+                </div>
+                <div class="bg-brand-card p-6 rounded-3xl border border-brand-border hover:border-brand-orange/50 transition-all">
+                    <div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center font-bold text-lg">🌗</div><h3 class="font-extrabold text-lg text-white">سر التنصيف والمضاعفة (جدول 5)</h3></div>
+                    <p class="text-sm text-brand-muted leading-relaxed">لضرب أي رقم في 5: خذ نصف الرقم واضربه في 10.<br>مثال: لـ <span class="text-brand-orange font-bold">5 × 8</span> ← نصف الـ 8 هو 4، اضربه في 10 يمنحك <span class="text-white font-bold">40</span>!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- الأوسمة والمستوى -->
+        <section id="section-badges" class="tab-content hidden max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-black text-white">سجل الإنجازات والأوسمة</h2>
+                <p class="text-sm text-brand-muted mt-1">تتبع تقدمك المستمر وافتح الرتب العالية في المنصة.</p>
+            </div>
+            <div class="bg-brand-card p-6 rounded-3xl border border-brand-border mb-8 shadow-xl">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-bold text-white" id="rank-progress-title">التقدم للمستوى التالي</span>
+                    <span class="text-sm font-bold text-brand-orange" id="rank-progress-percent">0%</span>
+                </div>
+                <div class="w-full bg-brand-dark h-4 rounded-full overflow-hidden p-0.5 border border-brand-border"><div id="rank-progress-bar" class="bg-brand-orange h-full rounded-full transition-all duration-500" style="width:0%"></div></div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="badges-container"></div>
+        </section>
+    </main>
+
+    <footer class="bg-brand-dark border-t border-brand-border py-6 text-center text-xs text-brand-muted">
+        <div class="max-w-7xl mx-auto px-4"><p>جميع الحقوق محفوظة ©️ <span id="year"></span> | <strong>منصة ضرب وناتج</strong> - إعداد وتصميم: <span class="text-brand-orange font-bold">سلطان الزهراني</span></p></div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function playSound(type) {
+            try {
+                if (!AudioCtx) return;
+                if (!audioCtx) audioCtx = new AudioCtx();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'correct') {
+                    osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(880, audioCtx.currentTime + .1);
+                    gain.gain.setValueAtTime(.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(.01, audioCtx.currentTime + .3);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + .3);
+                } else if (type === 'wrong') {
+                    osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(164.81, audioCtx.currentTime + .15);
+                    gain.gain.setValueAtTime(.15, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(.01, audioCtx.currentTime + .4);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + .4);
+                } else if (type === 'flip') {
+                    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(.05, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(.01, audioCtx.currentTime + .08);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + .08);
+                }
+            } catch (e) { console.log('Audio error', e); }
+        }
+
+        let userData = { points: 0, badges: [], speedBest: 0 };
+
+        const RANKS = [
+            { name: "مبتدئ", min: 0 },
+            { name: "حاسب سريع", min: 100 },
+            { name: "متمرس", min: 300 },
+            { name: "خبير الأرقام", min: 600 },
+            { name: "أسطورة الحساب", min: 1000 }
+        ];
+
+        const BADGES_LIST = [
+            { id: 'first_step', title: 'الشرارة الأولى', desc: 'اكسب أول 10 نقاط', icon: 'fa-bolt', target: 10 },
+            { id: 'master_100', title: 'عاشق الأرقام', desc: 'احصل على 100 نقطة', icon: 'fa-fire', target: 100 },
+            { id: 'master_300', title: 'سريع البديهة', desc: 'احصل على 300 نقطة', icon: 'fa-brain', target: 300 },
+            { id: 'master_600', title: 'عالم الحساب', desc: 'احصل على 600 نقطة', icon: 'fa-award', target: 600 },
+            { id: 'legend', title: 'أسطورة ضرب وناتج', desc: 'الوصول لـ 1000 نقطة', icon: 'fa-crown', target: 1000 }
+        ];
+
+        function loadData() {
+            try {
+                const saved = localStorage.getItem('edrobni_user');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    userData = {
+                        points: Math.max(0, Number(parsed.points) || 0),
+                        badges: Array.isArray(parsed.badges) ? parsed.badges : [],
+                        speedBest: Math.max(0, Number(parsed.speedBest) || 0)
+                    };
+                }
+            } catch (e) {
+                userData = { points: 0, badges: [], speedBest: 0 };
+            }
+            updateUI();
+        }
+
+        function saveData() {
+            try { localStorage.setItem('edrobni_user', JSON.stringify(userData)); }
+            catch (e) { console.warn('تعذر حفظ البيانات محلياً', e); }
+            updateUI();
+        }
+
+        function addPoints(pts) {
+            const previousPoints = Number(userData.points) || 0;
+            userData.points = previousPoints + pts;
+            checkBadges();
+            saveData();
+
+            if (previousPoints < 90 && userData.points >= 90)
+                showToast('🎉 مبروك! تم فتح تحدي 60 ثانية بعد وصولك إلى 90 نقطة.', 'success');
+            if (previousPoints < 150 && userData.points >= 150)
+                showToast('🏆 مبروك! وصلت إلى 150 نقطة، تم فتح جميع خانات المنصة ويمكنك الانتقال إليها الآن.', 'success');
+
+            showToast(`+${pts} نقطة!`, 'success');
+        }
+
+        function checkBadges() {
+            BADGES_LIST.forEach(b => {
+                if (userData.points >= b.target && !userData.badges.includes(b.id)) {
+                    userData.badges.push(b.id);
+                    if (typeof confetti === 'function') {
+                        try { confetti({ particleCount: 100, spread: 70, origin: { y: .6 } }); } catch (e) {}
+                    }
+                    showToast(`🏆 وسام جديد: ${b.title}`, 'info');
+                }
+            });
+        }
+
+        function getCurrentRank() {
+            let rank = RANKS[0].name;
+            for (const r of RANKS) if (userData.points >= r.min) rank = r.name;
+            return rank;
+        }
+
+        function updateUI() {
+            document.getElementById('user-points').textContent = userData.points;
+            document.getElementById('user-rank').textContent = getCurrentRank();
+            updateTabLocks();
+            renderBadges();
+        }
+
+        function updateTabLocks() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                const tabId = btn.id.replace('tab-', '');
+                const requiredPoints = (tabId === 'flashcards' || tabId === 'custom') ? 0 : tabId === 'speed' ? 90 : 150;
+                const isLocked = userData.points < requiredPoints;
+                btn.classList.toggle('opacity-40', isLocked);
+                btn.classList.toggle('cursor-not-allowed', isLocked);
+                btn.setAttribute('aria-disabled', isLocked ? 'true' : 'false');
+                btn.title = isLocked ? `تحتاج إلى ${requiredPoints} نقطة لفتح هذه الخانة` : '';
+            });
+        }
+
+        function showToast(msg, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `px-4 py-3 rounded-xl font-bold text-sm shadow-xl flex items-center gap-2 transform transition-all duration-300 translate-y-2 opacity-0 text-white ${
+                type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : 'bg-brand-orange'
+            }`;
+            const icon = document.createElement('i');
+            icon.className = 'fa-solid fa-circle-info';
+            const message = document.createElement('span');
+            message.textContent = msg;
+            toast.append(icon, message);
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        // التنقل بين الأقسام وإيقاف المؤقتات عند المغادرة
+        function switchTab(tabId) {
+            const requiredPoints = (tabId === 'flashcards' || tabId === 'custom') ? 0 : tabId === 'speed' ? 90 : 150;
+            if (userData.points < requiredPoints) {
+                showToast(`هذه الخانة مقفلة حالياً. تحتاج إلى ${requiredPoints} نقطة لفتحها.`, 'error');
+                return;
+            }
+
+            const currentSection = document.querySelector('.tab-content:not(.hidden)');
+            if (currentSection) {
+                const currentId = currentSection.id.replace('section-', '');
+                if (currentId === 'speed') exitSpeedChallenge();
+                if (currentId === 'quiz') resetQuizToSetup();
+            }
+
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-brand-orange', 'text-white', 'shadow-lg');
+                el.classList.add('text-brand-muted');
+            });
+
+            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.classList.add('bg-brand-orange', 'text-white', 'shadow-lg');
+            activeBtn.classList.remove('text-brand-muted');
+
+            if (tabId === 'quiz') resetQuizToSetup();
+        }
+
+        // الاستجابة الفورية
+        let currentFC = { a: 7, b: 8, ans: 56 };
+        let isFlipped = false;
+        let flashcardDeck = [];
+        let easyCardCount = 0;
+
+        function buildFlashcardDeck() {
+            flashcardDeck = [];
+            selectedTables.forEach(table => {
+                for (let multiplier = 1; multiplier <= 10; multiplier++) flashcardDeck.push({ a: table, b: multiplier });
+            });
+            for (let i = flashcardDeck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcardDeck[i], flashcardDeck[j]] = [flashcardDeck[j], flashcardDeck[i]];
+            }
+        }
+
+        function nextFlashcard() {
+            isFlipped = false;
+            document.getElementById('flashcard').classList.remove('rotate-y-180');
+            if (!flashcardDeck.length) buildFlashcardDeck();
+            const question = flashcardDeck.pop();
+            currentFC.a = question.a;
+            currentFC.b = question.b;
+            currentFC.ans = currentFC.a * currentFC.b;
+            document.getElementById('fc-question').textContent = `${currentFC.b} × ${currentFC.a}`;
+            document.getElementById('fc-answer').textContent = currentFC.ans;
+        }
+
+        function startFlashcards() {
+            if (!selectedTables.length) return showToast('اختر جدولاً واحداً على الأقل', 'error');
+            document.getElementById('flashcards-setup-card').classList.add('hidden');
+            document.getElementById('flashcards-active-card').classList.remove('hidden');
+            easyCardCount = 0;
+            buildFlashcardDeck();
+            updateFlashcardProgress();
+            nextFlashcard();
+        }
+
+        function resetFlashcards() {
+            easyCardCount = 0;
+            document.getElementById('flashcards-active-card').classList.add('hidden');
+            document.getElementById('flashcards-setup-card').classList.remove('hidden');
+            updateFlashcardProgress();
+        }
+
+        function updateFlashcardProgress() {
+            document.getElementById('flashcard-progress').textContent = `التقدم: ${easyCardCount} / 5 مسائل سهلة جداً`;
+        }
+
+        function flipCard() {
+            playSound('flip');
+            isFlipped = !isFlipped;
+            document.getElementById('flashcard').classList.toggle('rotate-y-180', isFlipped);
+        }
+
+        function rateCard(easy) {
+            if (easy) {
+                playSound('correct');
+                easyCardCount++;
+                if (easyCardCount >= 5) {
+                    easyCardCount = 0;
+                    addPoints(15);
+                    showToast('🎉 اجتزت 5 مسائل سهلة جداً وربحت 15 نقطة!', 'success');
+                }
+            } else {
+                playSound('wrong');
+                easyCardCount = 0;
+            }
+            updateFlashcardProgress();
+            nextFlashcard();
+        }
+
+        // تحدي 60 ثانية
+        let speedTimer;
+        let speedTimeLeft = 60;
+        let speedScore = 0;
+        let currentSpeedAns = 0;
+
+        function startSpeedChallenge() {
+            if (!selectedTables.length) return showToast('اختر جدولاً واحداً على الأقل', 'error');
+            clearInterval(speedTimer);
+            document.getElementById('speed-start-card').classList.add('hidden');
+            document.getElementById('speed-result-card').classList.add('hidden');
+            document.getElementById('speed-game-card').classList.remove('hidden');
+
+            speedTimeLeft = 60;
+            speedScore = 0;
+            document.getElementById('speed-timer').textContent = '60s';
+            document.getElementById('speed-score').textContent = '0';
+
+            nextSpeedQuestion();
+            const input = document.getElementById('speed-input');
+            input.value = '';
+            input.focus();
+
+            speedTimer = setInterval(() => {
+                speedTimeLeft--;
+                document.getElementById('speed-timer').textContent = `${speedTimeLeft}s`;
+                if (speedTimeLeft <= 0) {
+                    clearInterval(speedTimer);
+                    endSpeedChallenge();
+                }
+            }, 1000);
+        }
+
+        function exitSpeedChallenge() {
+            clearInterval(speedTimer);
+            document.getElementById('speed-game-card').classList.add('hidden');
+            document.getElementById('speed-result-card').classList.add('hidden');
+            document.getElementById('speed-start-card').classList.remove('hidden');
+        }
+
+        function nextSpeedQuestion() {
+            const a = selectedTables[Math.floor(Math.random() * selectedTables.length)];
+            const b = Math.floor(Math.random() * 10) + 1;
+            currentSpeedAns = a * b;
+            document.getElementById('speed-question').textContent = `${b} × ${a}`;
+            const hint = document.getElementById('speed-hint-answer');
+            hint.classList.add('hidden');
+            hint.textContent = '';
+        }
+
+        function revealSpeedAnswer() {
+            document.getElementById('speed-hint-answer').textContent = `الإجابة الصحيحة: ${currentSpeedAns}`;
+            document.getElementById('speed-hint-answer').classList.remove('hidden');
+        }
+
+        function checkSpeedAnswer(e) {
+            e.preventDefault();
+            if (speedTimeLeft <= 0 || document.getElementById('speed-game-card').classList.contains('hidden')) return;
+            const input = document.getElementById('speed-input');
+            const val = parseInt(input.value, 10);
+            if (val === currentSpeedAns) {
+                playSound('correct');
+                speedScore++;
+                document.getElementById('speed-score').textContent = speedScore;
+                input.value = '';
+                nextSpeedQuestion();
+            } else {
+                playSound('wrong');
+                const card = document.getElementById('speed-game-card');
+                card.classList.remove('shake');
+                void card.offsetWidth;
+                card.classList.add('shake');
+                setTimeout(() => card.classList.remove('shake'), 400);
+                input.value = '';
+            }
+        }
+
+        function endSpeedChallenge() {
+            clearInterval(speedTimer);
+            document.getElementById('speed-game-card').classList.add('hidden');
+            document.getElementById('speed-result-card').classList.remove('hidden');
+            document.getElementById('speed-final-score').textContent = speedScore;
+            const earnedPoints = speedScore * 5;
+            if (earnedPoints > 0) addPoints(earnedPoints);
+            if (speedScore > userData.speedBest) {
+                userData.speedBest = speedScore;
+                saveData();
+            }
+            let feedback = "استجابة رائعة! واصل التدريب للوصول لسرعة البرق.";
+            if (speedScore > 25) feedback = "مذهل! أداء أسطوري وسرعة بديهة خيالية!";
+            else if (speedScore < 10) feedback = "بداية جيدة، تكرار التمرين هو سر الاستجابة الفورية.";
+            document.getElementById('speed-feedback').textContent = feedback;
+        }
+
+        // التدريب المخصص
+        let selectedTables = [6, 7, 8, 9];
+        let customIndex = 0;
+        let customCurrentAns = 0;
+
+        function renderTableSelector(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            for (let i = 1; i <= 10; i++) {
+                const btn = document.createElement('button');
+                const isSelected = selectedTables.includes(i);
+                btn.className = `py-2 px-1 rounded-xl font-bold text-sm transition-all border ${
+                    isSelected ? 'bg-brand-orange text-white border-brand-orange' : 'bg-brand-dark text-brand-muted border-brand-border hover:border-gray-500'
+                }`;
+                btn.textContent = i;
+                btn.title = `جدول ${i}`;
+                btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+                btn.addEventListener('click', () => toggleTableSelection(i));
+                container.appendChild(btn);
+            }
+        }
+
+        function refreshAllTableSelectors() {
+            ['tables-selector', 'flashcards-tables-selector', 'speed-tables-selector', 'quiz-tables-selector'].forEach(renderTableSelector);
+        }
+
+        function initCustomSelector() { refreshAllTableSelectors(); }
+
+        function toggleTableSelection(num) {
+            if (selectedTables.includes(num)) {
+                if (selectedTables.length === 1) return showToast('اختر جدولاً واحداً على الأقل', 'error');
+                selectedTables = selectedTables.filter(x => x !== num);
+            } else {
+                selectedTables.push(num);
+                selectedTables.sort((a, b) => a - b);
+            }
+            refreshAllTableSelectors();
+        }
+
+        function startCustomPractice() {
+            if (!selectedTables.length) return showToast('اختر جدولاً واحداً على الأقل', 'error');
+            document.getElementById('custom-setup-card').classList.add('hidden');
+            document.getElementById('custom-active-card').classList.remove('hidden');
+            customIndex = 0;
+            nextCustomQuestion();
+        }
+
+        function nextCustomQuestion() {
+            if (customIndex >= 10) {
+                showToast('أحسنت! أكملت الجلسة التدريبية بنجاح (+30 نقطة)', 'success');
+                addPoints(30);
+                exitCustomPractice();
+                return;
+            }
+            document.getElementById('custom-progress-text').textContent = `السؤال ${customIndex + 1} من 10`;
+            const table = selectedTables[Math.floor(Math.random() * selectedTables.length)];
+            const multiplier = Math.floor(Math.random() * 10) + 1;
+            customCurrentAns = table * multiplier;
+            document.getElementById('custom-question').textContent = `${multiplier} × ${table}`;
+
+            const hint = document.getElementById('custom-hint-answer');
+            hint.classList.add('hidden');
+            hint.textContent = '';
+
+            const input = document.getElementById('custom-input');
+            input.value = '';
+            input.focus();
+        }
+
+        function revealCustomAnswer() {
+            const hint = document.getElementById('custom-hint-answer');
+            hint.textContent = `الإجابة الصحيحة: ${customCurrentAns}`;
+            hint.classList.remove('hidden');
+        }
+
+        function checkCustomAnswer(e) {
+            e.preventDefault();
+            const input = document.getElementById('custom-input');
+            if (parseInt(input.value, 10) === customCurrentAns) {
+                playSound('correct');
+                customIndex++;
+                nextCustomQuestion();
+            } else {
+                playSound('wrong');
+                const card = document.getElementById('custom-active-card');
+                card.classList.remove('shake');
+                void card.offsetWidth;
+                card.classList.add('shake');
+                setTimeout(() => card.classList.remove('shake'), 400);
+            }
+        }
+
+        function exitCustomPractice() {
+            document.getElementById('custom-active-card').classList.add('hidden');
+            document.getElementById('custom-setup-card').classList.remove('hidden');
+        }
+
+        // معركة الاختيارات السريعة
+        let quizTimerInterval;
+        let quizCorrectAns = 0;
+        let quizActive = false;
+        let quizAnswered = false;
+        let quizQuestionDuration = 30;
+
+        function startQuizBattle() {
+            const chosenTime = Number(document.getElementById('quiz-question-time').value);
+            if (!Number.isFinite(chosenTime) || chosenTime < 15 || chosenTime > 60)
+                return showToast('اختر وقتاً بين 15 و60 ثانية لكل سؤال', 'error');
+            if (!selectedTables.length) return showToast('اختر جدولاً واحداً على الأقل', 'error');
+            quizQuestionDuration = chosenTime;
+            quizActive = true;
+            startQuizQuestion();
+        }
+
+        function resetQuizToSetup() {
+            quizActive = false;
+            quizAnswered = false;
+            clearTimeout(quizTimerInterval);
+            document.getElementById('quiz-timer-bar').style.transition = 'none';
+            document.getElementById('quiz-timer-bar').style.width = '100%';
+            document.getElementById('quiz-active-card').classList.add('hidden');
+            document.getElementById('quiz-setup-card').classList.remove('hidden');
+            refreshAllTableSelectors();
+        }
+
+        function startQuizQuestion() {
+            if (!quizActive || document.getElementById('section-quiz').classList.contains('hidden')) {
+                quizActive = false;
+                clearTimeout(quizTimerInterval);
+                return;
+            }
+            if (!selectedTables.length) return showToast('اختر جدولاً واحداً على الأقل', 'error');
+
+            document.getElementById('quiz-setup-card').classList.add('hidden');
+            document.getElementById('quiz-active-card').classList.remove('hidden');
+            quizActive = true;
+            quizAnswered = false;
+            clearTimeout(quizTimerInterval);
+
+            const a = selectedTables[Math.floor(Math.random() * selectedTables.length)];
+            const b = Math.floor(Math.random() * 10) + 1;
+            quizCorrectAns = a * b;
+            document.getElementById('quiz-question').textContent = `${b} × ${a}`;
+
+            const options = new Set([quizCorrectAns]);
+            while (options.size < 4) {
+                const dummy = Math.floor(Math.random() * 100) + 1;
+                if (dummy !== quizCorrectAns) options.add(dummy);
+            }
+
+            const shuffled = Array.from(options).sort(() => Math.random() - .5);
+            const container = document.getElementById('quiz-options-container');
+            container.innerHTML = '';
+
+            shuffled.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'py-5 rounded-2xl bg-brand-dark hover:bg-brand-border text-white border border-brand-border text-2xl font-black transition-all hover:scale-105 active:scale-95';
+                btn.textContent = opt;
+                btn.addEventListener('click', () => handleQuizChoice(opt, btn));
+                container.appendChild(btn);
+            });
+
+            const timerBar = document.getElementById('quiz-timer-bar');
+            timerBar.style.transition = 'none';
+            timerBar.style.width = '100%';
+            requestAnimationFrame(() => {
+                if (!quizActive || quizAnswered) return;
+                timerBar.style.transition = `width ${quizQuestionDuration}s linear`;
+                timerBar.style.width = '0%';
+            });
+
+            quizTimerInterval = setTimeout(() => {
+                if (!quizActive || quizAnswered || document.getElementById('section-quiz').classList.contains('hidden')) return;
+                quizAnswered = true;
+                playSound('wrong');
+                showToast('انتهى وقت السؤال!', 'error');
+                const buttons = document.querySelectorAll('#quiz-options-container button');
+                buttons.forEach(button => {
+                    button.classList.add('quiz-option-disabled');
+                    if (Number(button.textContent) === quizCorrectAns) button.classList.add('quiz-option-correct');
+                });
+                setTimeout(() => {
+                    if (quizActive) startQuizQuestion();
+                }, 900);
+            }, quizQuestionDuration * 1000);
+        }
+
+        function handleQuizChoice(selected, btn) {
+            if (!quizActive || quizAnswered || document.getElementById('section-quiz').classList.contains('hidden')) return;
+
+            quizAnswered = true;
+            clearTimeout(quizTimerInterval);
+
+            const allButtons = document.querySelectorAll('#quiz-options-container button');
+            allButtons.forEach(button => button.classList.add('quiz-option-disabled'));
+
+            if (selected === quizCorrectAns) {
+                playSound('correct');
+                btn.classList.add('quiz-option-correct');
+                addPoints(15);
+                setTimeout(() => {
+                    if (quizActive) startQuizQuestion();
+                }, 700);
+            } else {
+                playSound('wrong');
+                btn.classList.add('quiz-option-wrong', 'shake');
+                allButtons.forEach(button => {
+                    if (Number(button.textContent) === quizCorrectAns) button.classList.add('quiz-option-correct');
+                });
+                setTimeout(() => {
+                    if (quizActive) startQuizQuestion();
+                }, 1000);
+            }
+        }
+
+        // الأوسمة والتقدم
+        function renderBadges() {
+            const container = document.getElementById('badges-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            BADGES_LIST.forEach(badge => {
+                const isUnlocked = userData.badges.includes(badge.id);
+                const el = document.createElement('div');
+                el.className = `p-5 rounded-3xl border flex flex-col items-center text-center transition-all ${
+                    isUnlocked ? 'bg-brand-card border-brand-orange/40 shadow-lg shadow-brand-orange/10' : 'bg-brand-dark border-brand-border opacity-50 grayscale'
+                }`;
+                el.innerHTML = `
+                    <div class="w-14 h-14 rounded-2xl ${isUnlocked ? 'bg-brand-orange text-white' : 'bg-brand-border text-brand-muted'} flex items-center justify-center text-2xl mb-3">
+                        <i class="fa-solid ${badge.icon}"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base mb-1">${badge.title}</h4>
+                    <p class="text-xs text-brand-muted">${badge.desc}</p>
+                    <span class="mt-3 text-[10px] font-bold px-2 py-1 rounded-full ${isUnlocked ? 'bg-green-500/10 text-green-400' : 'bg-brand-border text-brand-muted'}">
+                        ${isUnlocked ? 'مكتمل' : `يتطلب ${badge.target} نقطة`}
+                    </span>`;
+                container.appendChild(el);
+            });
+
+            let nextTarget = 1000;
+            for (const r of RANKS) {
+                if (r.min > userData.points) {
+                    nextTarget = r.min;
+                    break;
+                }
+            }
+            const pct = Math.min(100, Math.floor((userData.points / nextTarget) * 100));
+            document.getElementById('rank-progress-percent').textContent = `${pct}%`;
+            document.getElementById('rank-progress-bar').style.width = `${pct}%`;
+        }
+
+        window.addEventListener('load', () => {
+            loadData();
+            initCustomSelector();
+            nextFlashcard();
+        });
+    </script>
 </body>
 </html>
+'''
