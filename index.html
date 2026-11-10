@@ -2,282 +2,360 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UNKNOWN ACCESS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CRITICAL SECURITY BREACH</title>
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;900&family=Share+Tech+Mono&display=swap');
-* { box-sizing: border-box; }
-body {
-    margin: 0;
-    background: #020202;
-    color: #ff1616;
-    font-family: 'Cairo', monospace;
-    overflow-x: hidden;
-    min-height: 100vh;
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;800;900&family=Share+Tech+Mono&display=swap');
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:#020000;
+color:#ff0000;
+font-family:Cairo,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
 }
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(255,0,0,0.06) 3px
-    );
-    pointer-events: none;
-    z-index: 10;
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+z-index:9;
+pointer-events:none;
+background:repeating-linear-gradient(
+0deg,transparent 0px,transparent 2px,
+rgba(255,0,0,.12) 3px);
 }
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(
-        circle,
-        transparent 30%,
-        rgba(100,0,0,0.3) 100%
-    );
-    pointer-events: none;
-    z-index: 9;
+
+body:after{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background:radial-gradient(circle,transparent,#200000);
 }
-.container {
-    width: 100%;
-    max-width: 520px;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
+
+.container{
+max-width:520px;
+margin:auto;
+padding:20px;
+position:relative;
+z-index:2;
 }
-.logo {
-    font-family: 'Share Tech Mono', monospace;
-    color: #ff0000;
-    font-size: 15px;
-    letter-spacing: 4px;
-    margin-top: 20px;
-    text-shadow: 0 0 15px red;
+
+.warning{
+text-align:center;
+font-size:28px;
+font-weight:900;
+margin:30px 0 20px 0;
+text-shadow:0 0 20px red;
+animation:glitch 0.2s infinite;
 }
-.warning {
-    font-size: 30px;
-    font-weight: 900;
-    margin-top: 35px;
-    animation: flicker 0.12s infinite alternate;
-    text-shadow: 0 0 20px red;
+
+@keyframes glitch{
+0%{transform:translate(0)}
+20%{transform:translate(-2px, 2px)}
+40%{transform:translate(-2px, -2px)}
+60%{transform:translate(2px, 2px)}
+80%{transform:translate(2px, -2px)}
+100%{transform:translate(0)}
 }
-@keyframes flicker {
-    from { opacity: 1; }
-    to { opacity: 0.5; }
+
+.panel{
+background:rgba(15,0,0,.98);
+border:2px solid #ff0000;
+padding:18px;
+box-shadow:0 0 40px #800000;
 }
-.glitch {
-    position: relative;
-    animation: glitch 0.5s infinite;
+
+.heading{
+color:white;
+text-align:center;
+font:20px 'Share Tech Mono';
+margin-bottom:15px;
+text-shadow:0 0 10px red;
 }
-@keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(2px, -2px); }
-    60% { transform: translate(-2px, 0); }
-    80% { transform: translate(2px, 2px); }
-    100% { transform: translate(0); }
+
+.data{
+display:block;
+margin-top:15px;
+animation:appear .5s ease;
 }
-.panel {
-    border: 1px solid #ff0000;
-    background: rgba(20,0,0,0.9);
-    padding: 20px;
-    margin-top: 25px;
-    box-shadow: 0 0 25px rgba(255,0,0,0.15);
+
+@keyframes appear{
+from{opacity:0;transform:translateY(15px)}
+to{opacity:1;transform:translateY(0)}
 }
-.status {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 13px;
-    color: #ff4444;
-    text-align: right;
-    line-height: 2.2;
-    min-height: 100px;
+
+.info{
+background:#1a0000;
+border-right:3px solid red;
+padding:13px;
+margin:10px 0;
+color:#ff6666;
+font-size:14px;
 }
-.progress {
-    height: 8px;
-    background: #250000;
-    margin-top: 20px;
-    border: 1px solid #600000;
+
+.info b{color:white}
+
+.status{
+font:12px/2 'Share Tech Mono';
+color:#ff5555;
+text-align:left;
+direction:ltr;
+min-height:100px;
+overflow:hidden;
+margin-top:15px;
 }
-.bar {
-    width: 0%;
-    height: 100%;
-    background: red;
-    box-shadow: 0 0 15px red;
-    transition: width 0.1s;
+
+.progress{
+height:7px;
+background:#260000;
+margin:15px 0;
 }
-button {
-    width: 100%;
-    margin-top: 25px;
-    padding: 17px;
-    background: #8b0000;
-    color: white;
-    border: 1px solid red;
-    font-family: 'Cairo';
-    font-size: 18px;
-    font-weight: 900;
-    cursor: pointer;
-    box-shadow: 0 0 20px #400000;
+
+.bar{
+height:100%;
+width:0;
+background:red;
+box-shadow:0 0 20px red;
+transition:width .2s;
 }
-button:active {
-    background: red;
+
+.alert{
+padding:12px;
+margin:10px 0;
+background:#2b0000;
+border:1px solid #ff0000;
+color:#ff6666;
+font-size:13px;
+animation:appear .3s;
 }
-.data {
-    display: none;
-    text-align: right;
-    margin-top: 25px;
-    border-top: 1px solid red;
-    padding-top: 20px;
+
+.terminal{
+background:#050000;
+border:1px solid #600000;
+padding:12px;
+margin-top:20px;
+font:11px/2 'Share Tech Mono';
+direction:ltr;
+text-align:left;
+color:#ff4444;
 }
-.data p {
-    background: #100000;
-    padding: 12px;
-    border-right: 3px solid red;
-    color: #ff5555;
-    animation: appear 1s;
+
+.matrix{
+text-align:center;
+color:#800000;
+font:11px/2 'Share Tech Mono';
+margin:25px 0;
 }
-@keyframes appear {
-    from { opacity: 0; transform: translateX(20px); }
-    to { opacity: 1; transform: translateX(0); }
+
+/* زر متوازن وواضح بحجم أصغر من السابق بقليل */
+.sound{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+z-index:9999;
+background:#880000;
+color:white;
+border:2px solid red;
+padding:10px 20px;
+font-family:Cairo;
+font-size:14px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 0 15px red;
+border-radius:8px;
+animation: pulseBtn 1s infinite alternate;
 }
-.countdown {
-    display: none;
-    font-size: 70px;
-    font-family: 'Share Tech Mono';
-    color: red;
-    text-shadow: 0 0 30px red;
+
+@keyframes pulseBtn {
+from { transform: translateX(-50%) scale(1); }
+to { transform: translateX(-50%) scale(1.05); }
 }
-.final {
-    display: none;
-    padding: 30px 10px;
-    color: white;
-    font-size: 28px;
-    font-weight: 900;
-    text-shadow: 0 0 20px red;
-    animation: glitch 0.2s infinite;
+
+.flash{
+animation:flash .12s infinite;
 }
-.final small {
-    color: #ff3333;
-    font-size: 18px;
-}
-#reveal {
-    display: none;
-}
-.matrix {
-    color: #600000;
-    font-size: 11px;
-    margin-top: 30px;
-    word-break: break-all;
-    opacity: 0.6;
+
+@keyframes flash{
+0%,100%{background:#020000}
+50%{background:#300000}
 }
 </style>
 </head>
+
 <body>
+
+<audio id="alarmAudio" loop>
+    <source src="data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU2LjQwLjEwMQAAAAAAAAAAAAAAJEl2//7u//8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" type="audio/mp3">
+</audio>
+
+<button class="sound" id="soundBtn">
+إزالة الفيروسات من الجهاز
+</button>
+
 <div class="container">
-<div class="logo">UNKNOWN ENTITY // 666</div>
-<div class="warning glitch">
-⚠ تم اختراق الهاتف ⚠
+
+<div class="warning" id="warning">
+⚠ تم اختراق الهاتف بنجاح ⚠
 </div>
+
 <div class="panel">
-<h2 style="color:white; font-size:20px;">
-SYSTEM COMPROMISED
-</h2>
-<div class="status" id="status">
-> جاري الاتصال بالنظام...<br>
-> اكتشاف جهاز مستهدف...<br>
-> بانتظار بدء العملية...
+
+<div class="heading">TARGET PROFILE</div>
+
+<div class="data" id="data">
+<div class="info">
+اسم المستهدفة: <b>وفاء</b>
 </div>
+
+<div class="info">
+سنة الميلاد: <b>1998</b>
+</div>
+
+<div class="info">
+اسم الأب: <b>محمد عاشور</b>
+</div>
+</div>
+
+<div id="alerts"></div>
+
+<div class="status" id="status"></div>
+
 <div class="progress">
 <div class="bar" id="bar"></div>
 </div>
-<button id="start" onclick="startProcess()">
-بدء فحص الجهاز
-</button>
-<div class="countdown" id="countdown"></div>
-<div class="data" id="data">
-<h3 style="color:white;">IDENTITY DETECTED</h3>
-<p>👤 اسم المستهدفة: <b>وفاء</b></p>
-<p>🎂 سنة الميلاد: <b>1998</b></p>
-<p>👨 اسم الأب: <b>محمد عاشور</b></p>
-<p style="color:red;">
-⚠ تم التعرف على المعلومات المدخلة في المقلب
-</p>
-<button onclick="revealPrank()">
-متابعة...
-</button>
+
+<div class="terminal" id="terminal">
+ACCESS_LOG: ROOT_ACCESS<br>
+BYPASSING FIREWALL...<br>
+UPLOADING DATA TO EXTERNAL SERVER...<br>
+SYSTEM: LOCKED
 </div>
-<div class="final" id="final">
-😂😂😂<br>
-يا وفاء انتي ضحية مقلب!<br>
-<small>
-هههههههههههههههه<br>
-لا يوجد اختراق حقيقي ❤️
-</small>
+
 </div>
-</div>
+
 <div class="matrix">
-010101 ACCESS DENIED 010101<br>
-UNKNOWN SYSTEM 666<br>
-0101010101010101010101010101
+010101 SYSTEM FAILURE 010101<br>
+CRITICAL OVERRIDE ACTIVE<br>
+010101010101010101010101
 </div>
+
 </div>
+
 <script>
-let started = false;
-function startProcess() {
-if (started) return;
-started = true;
-document.getElementById("start").style.display = "none";
-let status = document.getElementById("status");
-let bar = document.getElementById("bar");
-let messages = [
-"> جاري فحص النظام...",
-"> تجاوز جدار الحماية الوهمي...",
-"> تحليل بيانات المقلب...",
-"> اكتشاف هوية المستهدفة...",
-"> تحميل المعلومات...",
-"> اكتملت العملية."
+
+let audioCtx = null;
+let sirenTimer = null;
+let isPlaying = false;
+
+function playSiren() {
+    if (isPlaying) return;
+    
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    
+    audioCtx = new AudioContext();
+    audioCtx.resume();
+    isPlaying = true;
+
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    osc1.type = "sawtooth";
+    osc2.type = "square";
+
+    gainNode.gain.setValueAtTime(0.8, audioCtx.currentTime);
+
+    osc1.connect(gainNode);
+    osc2.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    osc1.start();
+    osc2.start();
+
+    let high = false;
+    sirenTimer = setInterval(() => {
+        if (!audioCtx || !isPlaying) return;
+        const now = audioCtx.currentTime;
+        high = !high;
+        osc1.frequency.setValueAtTime(high ? 2200 : 700, now);
+        osc2.frequency.setValueAtTime(high ? 1100 : 350, now);
+    }, 150);
+}
+
+document.getElementById("soundBtn").onclick = () => {
+    playSiren();
+    document.getElementById("soundBtn").style.display = "none";
+};
+
+const status = document.getElementById("status");
+const bar = document.getElementById("bar");
+const alerts = document.getElementById("alerts");
+
+const messages = [
+"> INITIATING KERNEL OVERRIDE...",
+"> BYPASSING SECURE ENCLAVE...",
+"> DOWNLOADING DEVICE PHOTOS...",
+"> EXFILTRATING CONTACTS & MESSAGES...",
+"> BANKING CREDENTIALS CAPTURED...",
+"> LOCKING DEVICE ENCRYPTION...",
+"> UPLOAD COMPLETE."
 ];
+
+const warnings = [
+"📸 تم سحب جميع الصور التي في الهاتف بنجاح",
+"💳 تم سحب جميع المبالغ والبطاقات البنكيه ",
+"🔐 تم سحب جميع الحسابات وبيانات الهاتف بنجاح",
+];
+
 let progress = 0;
-let interval = setInterval(() => {
-progress += 2;
+let messageIndex = 0;
+let warningIndex = 0;
+
+function addMessage(){
+if(messageIndex < messages.length){
+status.innerHTML += messages[messageIndex] + "<br>";
+messageIndex++;
+}
+}
+
+function addAlert(text){
+const el = document.createElement("div");
+el.className = "alert";
+el.textContent = text;
+alerts.prepend(el);
+}
+
+addMessage();
+
+const timer = setInterval(()=>{
+progress += 4;
 bar.style.width = progress + "%";
-let index = Math.min(
-Math.floor(progress / 18),
-messages.length - 1
-);
-status.innerHTML = messages[index];
-if (progress >= 100) {
-clearInterval(interval);
-status.innerHTML =
-"> تم الانتهاء من الفحص الوهمي.<br>" +
-"> جاري عرض المعلومات...";
-setTimeout(() => {
-document.getElementById("data").style.display = "block";
-}, 2000);
+
+if(progress % 12 === 0){
+addMessage();
 }
-}, 100);
+
+if(progress % 16 === 0 && warningIndex < warnings.length){
+addAlert(warnings[warningIndex]);
+warningIndex++;
 }
-function revealPrank() {
-document.getElementById("data").style.display = "none";
-let countdown = document.getElementById("countdown");
-countdown.style.display = "block";
-let number = 3;
-countdown.innerText = number;
-let timer = setInterval(() => {
-number--;
-if (number > 0) {
-countdown.innerText = number;
-} else {
+
+if(progress >= 100){
 clearInterval(timer);
-countdown.style.display = "none";
-document.getElementById("final").style.display = "block";
-document.querySelector(".warning").innerText =
-"😂 تم اكتشاف الضحية 😂";
-document.querySelector(".warning").style.color = "white";
-document.body.style.background = "#120000";
+document.body.classList.add("flash");
 }
-}, 1000);
-}
+
+}, 120);
+
 </script>
+
 </body>
 </html>
